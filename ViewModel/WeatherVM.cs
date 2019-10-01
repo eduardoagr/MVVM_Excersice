@@ -10,21 +10,23 @@ namespace MVVM_Example.ViewModel {
         public RootObject rootObject { get; set; }
 
         private string _cityData;
-
         public string cityData {
             get { return _cityData; }
             set {
-                _cityData = value;
-                GetData();
+                if (value != _cityData) {
+                    _cityData = value;
+                    onPropertyChanged("cityData");
+                }
             }
         }
+
 
         private async void GetData() {
             cityData = await MapLocator.GetCityData();
         }
 
         public WeatherVM() {
-            rootObject = new RootObject();
+            GetData();
         }
 
 

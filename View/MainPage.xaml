@@ -17,9 +17,8 @@
     <Grid DataContext="{StaticResource vm}">
         <AutoSuggestBox Margin="40"
                         QueryIcon="Find"
-                        PlaceholderText="Search"
-                        Text="{Binding Path=cityData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        />
+                        PlaceholderText="Loading your current location"
+                        Text="{Binding Path=cityData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
     </Grid>
 
