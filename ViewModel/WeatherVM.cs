@@ -1,8 +1,5 @@
-﻿using MVVM_Example.Interfaces;
-using MVVM_Example.Model;
-using System;
+﻿using MVVM_Example.Model;
 using System.ComponentModel;
-using System.Threading.Tasks;
 
 namespace MVVM_Example.ViewModel {
     public class WeatherVM: INotifyPropertyChanged {
@@ -26,6 +23,7 @@ namespace MVVM_Example.ViewModel {
         }
 
         public WeatherVM() {
+            rootObject = new RootObject();
             GetData();
         }
 

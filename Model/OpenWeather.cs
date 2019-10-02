@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MVVM_Example.Model {
 
-    public class Main : Notify {
+    public class Main: Notify {
         private double _temp;
         public double temp {
             get { return _temp; }
@@ -39,7 +39,7 @@ namespace MVVM_Example.Model {
 
     }
 
-    public class Weather : Notify {
+    public class Weather: Notify {
         private string _main;
         public string main {
             get { return _main; }
@@ -76,7 +76,7 @@ namespace MVVM_Example.Model {
     }
 
 
-    public class Day : Notify {
+    public class Day: Notify {
         private Main _main;
         public Main main {
             get { return _main; }
@@ -113,7 +113,7 @@ namespace MVVM_Example.Model {
 
     }
 
-    public class RootObject : Notify {
+    public class RootObject: Notify {
         private List<Day> _list;
         public List<Day> list {
             get { return _list; }
