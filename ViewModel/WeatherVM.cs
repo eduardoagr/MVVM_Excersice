@@ -1,4 +1,5 @@
 ﻿using MVVM_Example.Model;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace MVVM_Example.ViewModel {
@@ -13,18 +14,36 @@ namespace MVVM_Example.ViewModel {
                 if (value != _cityData) {
                     _cityData = value;
                     onPropertyChanged("cityData");
+                    GetWeatherData();
                 }
             }
         }
 
 
-        private async void GetData() {
+        private async void GetLocation() {
             cityData = await MapLocator.GetCityData();
         }
 
         public WeatherVM() {
             rootObject = new RootObject();
-            GetData();
+            GetLocation();
+        }
+
+        private async void GetWeatherData(){
+            var splitedData = cityData.Split(",");
+            var city = splitedData[0];
+            var conutryCode = splitedData[1];
+
+            var data = await WeatherAPI.GetWeatherDataAsync(city, conutryCode);
+            if (data != null) {
+                for (int i = 0; i < data.list.Count; i++) {
+                    rootObject.list[i].dt_txt = data.list[i].dt_txt;
+                    rootObject.list[i].main.temp_max = data.list[i].main.temp_max;
+                    rootObject.list[i].main.temp_min = data.list[i].main.temp_min;
+                    rootObject.list[i].weather[i].icon
+                }
+            }
+
         }
 
 

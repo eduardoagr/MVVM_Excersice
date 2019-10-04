@@ -1,25 +1,55 @@
 ﻿<Page x:Name="dataco"
       x:Class="MVVM_Example.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MVVM_Example"
-    xmlns:vm="using:MVVM_Example.ViewModel"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="using:MVVM_Example.ViewModel"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <vm:WeatherVM x:Key="vm" />
     </Page.Resources>
 
-
-    <Grid DataContext="{StaticResource vm}">
-        <AutoSuggestBox Margin="40"
+    <RelativePanel DataContext="{StaticResource vm}">
+        <AutoSuggestBox Margin="30"
+                        x:Name="QueryBox"
+                        Width="300"
                         QueryIcon="Find"
-                        PlaceholderText="Loading your current location"
-                        Text="{Binding Path=cityData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        PlaceholderText="Plase wait"
+                        Text="{Binding cityData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ListView RelativePanel.Below="QueryBox"
+                  Margin="20" ItemsSource="{Binding rootObject.list}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <RelativePanel>
+                        <TextBlock x:Name="dateTB"
+                                   Text="{Binding dt_txt}"
+                                   RelativePanel.RightOf="iconTB"
+                                   RelativePanel.AlignTopWith="iconTB" />
+                        <TextBlock x:Name="highTB"
+                                   Text="{Binding main.temp_max}"
+                                   RelativePanel.RightOf="iconTB"
+                                   RelativePanel.Below="dateTB"
+                                   FontSize="10" />
+                        <TextBlock x:Name="lowTB"
+                                   RelativePanel.RightOf="highTB"
+                                   RelativePanel.Below="dateTB"
+                                   FontSize="10"
+                                   Text="{Binding main.temp_min}"
+                                   Margin="10,0,0,0" />
+                        <Image x:Name="iconTB"
+                               Source="{}"
+                               Height="30"
+                               Width="30"
+                              />
+                    </RelativePanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
 
-    </Grid>
+        </ListView>
+    </RelativePanel>
+
 
 </Page>

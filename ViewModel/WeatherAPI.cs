@@ -1,6 +1,7 @@
 ﻿using MVVM_Example.Model;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MVVM_Example.ViewModel {
     public class WeatherAPI {
@@ -9,7 +10,7 @@ namespace MVVM_Example.ViewModel {
         const string URL = "https://api.openweathermap.org/data/2.5/forecast?q={0},{1}&appid={2}&units=metric";
 
 
-        public static async void GetWeatherDataAsync(string city, string countryCode) {
+        public static async Task<RootObject> GetWeatherDataAsync(string city, string countryCode) {
 
             var result = new RootObject();
 
@@ -21,6 +22,8 @@ namespace MVVM_Example.ViewModel {
                 var response = await request.Content.ReadAsStringAsync();
 
                 result = JsonConvert.DeserializeObject<RootObject>(response);
+
+                return result;
             }
         }
     }
