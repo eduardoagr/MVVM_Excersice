@@ -8,9 +8,9 @@
       mc:Ignorable="d"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>
+    <appl.Resources>
         <vm:WeatherVM x:Key="vm" />
-    </Page.Resources>
+    </appl.Resources>
     
     <RelativePanel DataContext="{StaticResource vm}">
         <TextBox x:Name="currentLocation"
