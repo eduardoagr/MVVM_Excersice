@@ -1,8 +1,7 @@
 ﻿using MVVM_Example.Model;
 
 using Newtonsoft.Json;
-using System;
-using System.Diagnostics;
+
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -12,6 +11,7 @@ namespace MVVM_Example.ViewModel {
         const string API_KEY = "8iJsDPBYitjlAyu3IPiVpNbCNBOKI8mO";
         const string URL = "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey={0}&q={1}%2C{2}";
         const string FORECAST_URL = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/{0}?apikey={1}&metric=true";
+        const string ICONPATH = "https://developer.accuweather.com/sites/default/files/";
 
         public static async Task<City> GetCityDstaAsync(double lat, double lon) {
 
@@ -41,18 +41,10 @@ namespace MVVM_Example.ViewModel {
                 var request = await client.GetAsync(apiData);
                 var responce = await request.Content.ReadAsStringAsync();
 
-                try {
-                    result = JsonConvert.DeserializeObject<AccuWeather>(responce);
+                result = JsonConvert.DeserializeObject<AccuWeather>(responce);
 
-                    return result;
-
-                } catch (Exception e) {
-
-                    Debug.Fail("You exceed your api calls");
-                }
+                return result;
             }
-
-            return null;
         }
     }
 }
