@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 using Windows.Services.Maps;
 
 namespace MVVM_Example.ViewModel {
-    public class MapLocator {
+    public class BingLocator {
 
         const string KEY = "UNtijPSBDvr0h0U68vUX~khL3P_FpMNw2Ik_CpvHUUQ~Aszrntk4oWtZE6ZxGzDK34kutoDZy_-rBh4x2hAd2oKnL7rTF6bckQ06wjDIO9hu";
 
@@ -25,7 +28,7 @@ namespace MVVM_Example.ViewModel {
                 return null;
             }
 
-            return $"{finderResult.Locations[0].Address.Town},{finderResult.Locations[0].Address.CountryCode}";
+            return finderResult.Locations[0].Address.Town;
         }
     }
 }

@@ -11,13 +11,12 @@ namespace MVVM_Example {
         public MainPage() {
             this.InitializeComponent();
 
-            call();
         }
 
         //I will leave this here for testing purposes
 
-        private async void call() {
-            var location = await MapLocator.GetCityData();
-        }
+        //private async void call() {
+        //    var location = await MapLocator.GetCityData();
+        //}
     }
 }

@@ -1,11 +1,14 @@
 ﻿using MVVM_Example.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
+using Windows.Media.DialProtocol;
 
 namespace MVVM_Example.ViewModel {
     public class WeatherVM: INotifyPropertyChanged {
 
-        public RootObject rootObject { get; set; }
+        public AccuWeather accuWeather { get; set; }
 
         private string _cityData;
         public string cityData {
@@ -19,34 +22,47 @@ namespace MVVM_Example.ViewModel {
             }
         }
 
-
-        private async void GetLocation() {
-            cityData = await MapLocator.GetCityData();
+        private DailyForecast _currentDay;
+        public DailyForecast currentDay {
+            get { return _currentDay; }
+            set {
+                if (value != _currentDay) {
+                    _currentDay = value;
+                    onPropertyChanged("currentDay");
+                }
+            }
         }
+
+        const string ICONPATH = "https://developer.accuweather.com/sites/default/files/";
+
+        public ObservableCollection<DailyForecast> dailyForecasts { get; set; }
+
 
         public WeatherVM() {
-            rootObject = new RootObject();
-            GetLocation();
+            GetCuurentLocation();
+            dailyForecasts = new ObservableCollection<DailyForecast>();
         }
 
-        private async void GetWeatherData(){
-            var splitedData = cityData.Split(",");
-            var city = splitedData[0];
-            var conutryCode = splitedData[1];
+        private async void GetCuurentLocation() {
+            cityData = await BingLocator.GetCityData();
+        }
 
-            var data = await WeatherAPI.GetWeatherDataAsync(city, conutryCode);
-            if (data != null) {
-                for (int i = 0; i < data.list.Count; i++) {
-                    rootObject.list[i].dt_txt = data.list[i].dt_txt;
-                    rootObject.list[i].main.temp_max = data.list[i].main.temp_max;
-                    rootObject.list[i].main.temp_min = data.list[i].main.temp_min;
-                    rootObject.list[i].weather[i].icon
+        public async void GetWeatherData() {
+            var geoposition = await LocationManager.GetGeopositionAsync();
+            var currentLocationKey = await WeatherAPI.GetCityDstaAsync(geoposition.Coordinate.Point.Position.Latitude, geoposition.Coordinate.Point.Position.Longitude);
+
+            var weatherData = await WeatherAPI.GetWeatherAsync(currentLocationKey.Key);
+            if (weatherData != null) {
+
+                foreach (var item in weatherData.DailyForecasts) {
+                    dailyForecasts.Add(item);
                 }
             }
 
+            currentDay = dailyForecasts[0];
+            Debug.WriteLine(dailyForecasts[0].Day.Icon);
+           
         }
-
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void onPropertyChanged(string property) {

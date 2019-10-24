@@ -119,10 +119,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LocationManager\LocationManager.cs" />
+    <Compile Include="Model\AccuWeather.cs" />
+    <Compile Include="Model\City.cs" />
     <Compile Include="Notify\Notify.cs" />
-    <Compile Include="Model\OpenWeather.cs" />
-    <Compile Include="ViewModel\MapLocator.cs" />
+    <Compile Include="ViewModel\BingLocator.cs" />
+    <Compile Include="ViewModel\LocationManager.cs" />
     <Compile Include="ViewModel\WeatherAPI.cs" />
     <Compile Include="ViewModel\WeatherVM.cs" />
     <Compile Include="View\MainPage.xaml.cs">
@@ -163,7 +164,6 @@
       <Version>12.0.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

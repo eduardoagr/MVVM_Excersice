@@ -11,44 +11,72 @@
     <Page.Resources>
         <vm:WeatherVM x:Key="vm" />
     </Page.Resources>
-
+    
     <RelativePanel DataContext="{StaticResource vm}">
-        <AutoSuggestBox Margin="30"
-                        x:Name="QueryBox"
-                        Width="300"
-                        QueryIcon="Find"
-                        PlaceholderText="Plase wait"
-                        Text="{Binding cityData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-        <ListView RelativePanel.Below="QueryBox"
-                  Margin="20" ItemsSource="{Binding rootObject.list}">
+        <TextBox x:Name="currentLocation"
+                 PlaceholderText="Please wait..."
+                 IsReadOnly="True"
+                 Margin="20"
+                 Width="300"
+                 Text="{Binding cityData,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <ListView RelativePanel.Below="currentLocation"
+                  x:Name="ForecastList"
+                  Margin="20"
+                  SelectedItem="{Binding currentDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding dailyForecasts}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <RelativePanel>
+                    <StackPanel Margin="10">
                         <TextBlock x:Name="dateTB"
-                                   Text="{Binding dt_txt}"
-                                   RelativePanel.RightOf="iconTB"
-                                   RelativePanel.AlignTopWith="iconTB" />
+                                   Text="{Binding Date.DayOfWeek}" />
                         <TextBlock x:Name="highTB"
-                                   Text="{Binding main.temp_max}"
-                                   RelativePanel.RightOf="iconTB"
-                                   RelativePanel.Below="dateTB"
+                                   Text="{Binding Temperature.Maximum.Value}"
                                    FontSize="10" />
                         <TextBlock x:Name="lowTB"
-                                   RelativePanel.RightOf="highTB"
-                                   RelativePanel.Below="dateTB"
                                    FontSize="10"
-                                   Text="{Binding main.temp_min}"
-                                   Margin="10,0,0,0" />
-                        <Image x:Name="iconTB"
-                               Source="{}"
-                               Height="30"
-                               Width="30"
-                              />
-                    </RelativePanel>
+                                   Text="{Binding Temperature.Minimum.Value}" />
+                    </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
-
         </ListView>
+        <Image x:Name="Icon"
+               Source="{Binding currentDay.Day.IconUrl}"
+               Width="50"
+               Height="50"
+               RelativePanel.AlignVerticalCenterWithPanel="True"
+               RelativePanel.AlignHorizontalCenterWithPanel="True"
+               RelativePanel.AlignTopWith="ForecastList" />
+        <TextBlock x:Name="hight_temp"
+                   Text="High:"
+                   FontSize="20"
+                   RelativePanel.AlignVerticalCenterWithPanel="True"
+                   RelativePanel.AlignHorizontalCenterWithPanel="True"
+                   RelativePanel.Below="Icon"
+                   RelativePanel.AlignLeftWith="Icon" />
+        <TextBlock Text="{Binding currentDay.Temperature.Maximum.Value}"
+                   x:Name="high"
+                   FontSize="20"
+                   RelativePanel.RightOf="hight_temp"
+                   RelativePanel.Below="Icon" />
+        <TextBlock x:Name="low_temp"
+                   RelativePanel.Below="hight_temp"
+                   Text="Low: "
+                   RelativePanel.AlignLeftWith="hight_temp"
+                   FontSize="20" />
+        <TextBlock x:Name="low"
+                   Text="{Binding currentDay.Temperature.Minimum.Value}"
+                   FontSize="20"
+                   RelativePanel.Below="high"
+                   RelativePanel.AlignRightWith="high"
+                   RelativePanel.RightOf="low_temp"
+                   />
+        <TextBlock x:Name="desc"
+                   Text="{Binding currentDay.Day.IconPhrase}"
+                   RelativePanel.Below="low_temp"
+                   RelativePanel.AlignHorizontalCenterWithPanel="True"
+                   FontSize="20"
+                   FontWeight="Bold"
+                   RelativePanel.AlignLeftWith="low_temp"/>
     </RelativePanel>
 
 

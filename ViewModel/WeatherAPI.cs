@@ -1,30 +1,58 @@
 ﻿using MVVM_Example.Model;
+
 using Newtonsoft.Json;
+using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace MVVM_Example.ViewModel {
     public class WeatherAPI {
 
-        const string KEY = "d3b450256f7cf6125f8f26eef24a5966";
-        const string URL = "https://api.openweathermap.org/data/2.5/forecast?q={0},{1}&appid={2}&units=metric";
+        const string API_KEY = "8iJsDPBYitjlAyu3IPiVpNbCNBOKI8mO";
+        const string URL = "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey={0}&q={1}%2C{2}";
+        const string FORECAST_URL = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/{0}?apikey={1}&metric=true";
 
+        public static async Task<City> GetCityDstaAsync(double lat, double lon) {
 
-        public static async Task<RootObject> GetWeatherDataAsync(string city, string countryCode) {
+            var result = new City();
 
-            var result = new RootObject();
-
-            var apiURL = string.Format(URL, city, countryCode, KEY);
+            var apiData = string.Format(URL, API_KEY, lat, lon);
 
             using (var client = new HttpClient()) {
 
-                var request = await client.GetAsync(apiURL);
+                var request = await client.GetAsync(apiData);
                 var response = await request.Content.ReadAsStringAsync();
 
-                result = JsonConvert.DeserializeObject<RootObject>(response);
+                result = JsonConvert.DeserializeObject<City>(response);
 
                 return result;
             }
+        }
+
+        public static async Task<AccuWeather> GetWeatherAsync(string LocationKey) {
+
+            var result = new AccuWeather();
+
+            var apiData = string.Format(FORECAST_URL, LocationKey, API_KEY);
+
+            using (var client = new HttpClient()) {
+
+                var request = await client.GetAsync(apiData);
+                var responce = await request.Content.ReadAsStringAsync();
+
+                try {
+                    result = JsonConvert.DeserializeObject<AccuWeather>(responce);
+
+                    return result;
+
+                } catch (Exception e) {
+
+                    Debug.Fail("You exceed your api calls");
+                }
+            }
+
+            return null;
         }
     }
 }

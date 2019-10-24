@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Windows.Devices.Geolocation;
 
-namespace MVVM_Example {
+namespace MVVM_Example.ViewModel {
     public class LocationManager {
 
         public static async Task<Geoposition> GetGeopositionAsync() {
