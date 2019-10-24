@@ -24,7 +24,7 @@ namespace MVVM_Example.Model {
     public class Temperature {
         public Minimum Minimum { get; set; }
         public Maximum Maximum { get; set; }
-    
+
     }
 
     public class Day {

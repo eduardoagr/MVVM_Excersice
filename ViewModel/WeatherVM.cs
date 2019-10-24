@@ -1,9 +1,8 @@
 ﻿using MVVM_Example.Model;
-using System;
+
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using Windows.Media.DialProtocol;
 
 namespace MVVM_Example.ViewModel {
     public class WeatherVM: INotifyPropertyChanged {
@@ -33,7 +32,6 @@ namespace MVVM_Example.ViewModel {
             }
         }
 
-        const string ICONPATH = "https://developer.accuweather.com/sites/default/files/";
 
         public ObservableCollection<DailyForecast> dailyForecasts { get; set; }
 
@@ -61,7 +59,7 @@ namespace MVVM_Example.ViewModel {
 
             currentDay = dailyForecasts[0];
             Debug.WriteLine(dailyForecasts[0].Day.Icon);
-           
+
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
