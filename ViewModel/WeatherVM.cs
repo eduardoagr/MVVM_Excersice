@@ -6,55 +6,55 @@ using System.ComponentModel;
 namespace MVVM_Example.ViewModel {
     public class WeatherVM: INotifyPropertyChanged {
 
-        public AccuWeather accuWeather { get; set; }
+        public AccuWeather AccuWeather { get; set; }
 
         private string _cityData;
-        public string cityData {
+        public string CityData {
             get { return _cityData; }
             set {
                 if (value != _cityData) {
                     _cityData = value;
-                    onPropertyChanged("cityData");
+                    OnPropertyChanged("cityData");
                     GetWeatherData();
                 }
             }
         }
 
         private DailyForecast _currentDay;
-        public DailyForecast currentDay {
+        public DailyForecast CurrentDay {
             get { return _currentDay; }
             set {
                 if (value != _currentDay) {
                     _currentDay = value;
-                    onPropertyChanged("currentDay");
+                    OnPropertyChanged("currentDay");
                 }
             }
         }
 
         private bool _ring;
-        public bool ring {
+        public bool Ring {
             get { return _ring; }
             set {
                 if (value != _ring) {
                     _ring = value;
-                    onPropertyChanged("ring");
+                    OnPropertyChanged("ring");
                 }
             }
         }
 
 
 
-        public ObservableCollection<DailyForecast> dailyForecasts { get; set; }
+        public ObservableCollection<DailyForecast> DailyForecasts { get; set; }
 
 
         public WeatherVM() {
             GetCuurentLocation();
-            dailyForecasts = new ObservableCollection<DailyForecast>();
-            ring = true;
+            DailyForecasts = new ObservableCollection<DailyForecast>();
+            Ring = true;
         }
 
         private async void GetCuurentLocation() {
-               cityData = await BingLocator.GetCityData();
+               CityData = await BingLocator.GetCityData();
         }
 
         public async void GetWeatherData() {
@@ -65,16 +65,16 @@ namespace MVVM_Example.ViewModel {
             if (weatherData != null) {
 
                 foreach (var item in weatherData.DailyForecasts) {
-                    dailyForecasts.Add(item);
+                    DailyForecasts.Add(item);
                 }
             }
-            ring = false;
-            currentDay = dailyForecasts[0];
+            Ring = false;
+            CurrentDay = DailyForecasts[0];
 
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void onPropertyChanged(string property) {
+        private void OnPropertyChanged(string property) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
     }

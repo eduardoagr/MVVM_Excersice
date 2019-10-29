@@ -12,33 +12,29 @@ namespace MVVM_Example.ViewModel {
 
         public static async Task<City> GetCityDstaAsync(double lat, double lon) {
 
-            var result = new City();
-
             var apiData = string.Format(URL, API_KEY, lat, lon);
 
-            using (var client = new HttpClient()) {
+            using (HttpClient client = new HttpClient()) {
 
                 var request = await client.GetAsync(apiData);
                 var response = await request.Content.ReadAsStringAsync();
 
-                result = JsonConvert.DeserializeObject<City>(response);
+                City result = JsonConvert.DeserializeObject<City>(response);
 
-                return result;
+                return new City();
             }
         }
 
         public static async Task<AccuWeather> GetWeatherAsync(string LocationKey) {
 
-            var result = new AccuWeather();
-
             var apiData = string.Format(FORECAST_URL, LocationKey, API_KEY);
 
-            using (var client = new HttpClient()) {
+            using (HttpClient client = new HttpClient()) {
 
                 var request = await client.GetAsync(apiData);
                 var responce = await request.Content.ReadAsStringAsync();
 
-                result = JsonConvert.DeserializeObject<AccuWeather>(responce);
+                AccuWeather result = JsonConvert.DeserializeObject<AccuWeather>(responce);
 
                 return result;
             }

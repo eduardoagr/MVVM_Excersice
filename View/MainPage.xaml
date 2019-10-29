@@ -20,12 +20,12 @@
                  IsReadOnly="True"
                  Margin="20"
                  Width="300"
-                 Text="{Binding cityData,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                 Text="{Binding CityData,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <ListView RelativePanel.Below="currentLocation"
                   x:Name="ForecastList"
                   Margin="20"
-                  SelectedItem="{Binding currentDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  ItemsSource="{Binding dailyForecasts}">
+                  SelectedItem="{Binding CurrentDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding DailyForecasts}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="10">
@@ -44,7 +44,7 @@
         <ProgressRing x:Name="pRing"
                       RelativePanel.Above="ForecastList"
                       RelativePanel.AlignHorizontalCenterWith="currentLocation"
-                     IsActive="{Binding ring, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                     IsActive="{Binding Ring, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                       Margin="0,0,0,-10" />
         <Image x:Name="Icon"
                Source="{Binding currentDay.Day.IconUrl}"
