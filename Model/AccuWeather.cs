@@ -7,7 +7,7 @@ namespace MVVM_Example.Model {
         private double _Value;
 
         public double Value {
-            get { return Convert.ToInt32(_Value + "°C"); }
+            get { return Convert.ToInt32(_Value); }
             set { _Value = value; }
         }
     }
@@ -16,7 +16,7 @@ namespace MVVM_Example.Model {
         private double _Value;
 
         public double Value {
-            get { return Convert.ToInt32(_Value + "°C"); }
+            get { return Convert.ToInt32(_Value); }
             set { _Value = value; }
         }
     }

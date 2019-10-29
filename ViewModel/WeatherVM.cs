@@ -2,7 +2,6 @@
 
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace MVVM_Example.ViewModel {
     public class WeatherVM: INotifyPropertyChanged {
@@ -32,6 +31,18 @@ namespace MVVM_Example.ViewModel {
             }
         }
 
+        private bool _ring;
+        public bool ring {
+            get { return _ring; }
+            set {
+                if (value != _ring) {
+                    _ring = value;
+                    onPropertyChanged("ring");
+                }
+            }
+        }
+
+
 
         public ObservableCollection<DailyForecast> dailyForecasts { get; set; }
 
@@ -39,16 +50,17 @@ namespace MVVM_Example.ViewModel {
         public WeatherVM() {
             GetCuurentLocation();
             dailyForecasts = new ObservableCollection<DailyForecast>();
+            ring = true;
         }
 
         private async void GetCuurentLocation() {
-            cityData = await BingLocator.GetCityData();
+               cityData = await BingLocator.GetCityData();
         }
 
         public async void GetWeatherData() {
+        
             var geoposition = await LocationManager.GetGeopositionAsync();
             var currentLocationKey = await WeatherAPI.GetCityDstaAsync(geoposition.Coordinate.Point.Position.Latitude, geoposition.Coordinate.Point.Position.Longitude);
-
             var weatherData = await WeatherAPI.GetWeatherAsync(currentLocationKey.Key);
             if (weatherData != null) {
 
@@ -56,9 +68,8 @@ namespace MVVM_Example.ViewModel {
                     dailyForecasts.Add(item);
                 }
             }
-
+            ring = false;
             currentDay = dailyForecasts[0];
-            Debug.WriteLine(dailyForecasts[0].Day.Icon);
 
         }
         public event PropertyChangedEventHandler PropertyChanged;

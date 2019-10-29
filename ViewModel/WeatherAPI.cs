@@ -9,7 +9,6 @@ namespace MVVM_Example.ViewModel {
         const string API_KEY = "8iJsDPBYitjlAyu3IPiVpNbCNBOKI8mO";
         const string URL = "http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey={0}&q={1}%2C{2}";
         const string FORECAST_URL = "http://dataservice.accuweather.com/forecasts/v1/daily/5day/{0}?apikey={1}&metric=true";
-        const string ICONPATH = "https://developer.accuweather.com/sites/default/files/";
 
         public static async Task<City> GetCityDstaAsync(double lat, double lon) {
 

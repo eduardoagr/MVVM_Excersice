@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ValuesConverter.cs" />
     <Compile Include="Model\AccuWeather.cs" />
     <Compile Include="Model\City.cs" />
     <Compile Include="Notify\Notify.cs" />
